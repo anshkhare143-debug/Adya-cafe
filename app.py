@@ -1,7 +1,14 @@
-from flask import Flask, render_template_string, request, redirect, session
+from flask import Flask...
 app = Flask(__name__)
-app.secret_key = 'adya-cafe-final-56-items'
+@app.route('/static/qr.jpg')
+def qr_file():
+    import os
+    from flask import send_file
+    if os.path.exists('static/qr.jpg'):
+        return send_file('static/qr.jpg')
+    return send_file('IMG-20261022-WA0015.jpg')
 
+app.secret_key = ...
 MENU = [
     {"id":1,"name":"Tomato pizza","price":79,"cat":"PIZZA"},
     {"id":2,"name":"Onion pizza","price":89,"cat":"PIZZA"},
