@@ -1,131 +1,158 @@
-from flask import Flask...
-app = Flask(__name__)
-@app.route('/static/qr.jpg')
-def qr_file():
-    import os
-    from flask import send_file
-    if os.path.exists('static/qr.jpg'):
-        return send_file('static/qr.jpg')
-    return send_file('IMG-20261022-WA0015.jpg')
+from flask import Flask, request, jsonify, redirect
+import os
+from datetime import datetime
 
-app.secret_key = ...
+app = Flask(__name__)
+app.secret_key = 'adya-cafe-58-final'
+
 MENU = [
-    {"id":1,"name":"Tomato pizza","price":79,"cat":"PIZZA"},
-    {"id":2,"name":"Onion pizza","price":89,"cat":"PIZZA"},
-    {"id":3,"name":"Sweet corn pizza","price":89,"cat":"PIZZA"},
-    {"id":4,"name":"Margherita pizza","price":99,"cat":"PIZZA"},
-    {"id":5,"name":"Paneer pizza","price":149,"cat":"PIZZA"},
-    {"id":6,"name":"Veg hotel pizza","price":149,"cat":"PIZZA"},
-    {"id":7,"name":"Cheese pizza","price":179,"cat":"PIZZA"},
-    {"id":8,"name":"Burger","price":40,"cat":"BURGER"},
-    {"id":9,"name":"Cheese burger","price":60,"cat":"BURGER"},
-    {"id":10,"name":"Paneer burger","price":70,"cat":"BURGER"},
-    {"id":11,"name":"Red sauce pasta","price":100,"cat":"PASTA"},
-    {"id":12,"name":"White sauce pasta","price":120,"cat":"PASTA"},
-    {"id":13,"name":"Pink sauce pasta","price":130,"cat":"PASTA"},
-    {"id":14,"name":"Veg sandwich","price":50,"cat":"SANDWICH"},
-    {"id":15,"name":"Veg loted sandwich","price":70,"cat":"SANDWICH"},
-    {"id":16,"name":"Paneer sandwich","price":80,"cat":"SANDWICH"},
-    {"id":17,"name":"Veg hakka noodles","price":50,"cat":"NOODLES"},
-    {"id":18,"name":"Paneer noodles","price":70,"cat":"NOODLES"},
-    {"id":19,"name":"Masala maggi","price":40,"cat":"MAGGI"},
-    {"id":20,"name":"Sazwean maggi","price":50,"cat":"MAGGI"},
-    {"id":21,"name":"Veg loted maggi","price":60,"cat":"MAGGI"},
-    {"id":22,"name":"Paneer maggi","price":70,"cat":"MAGGI"},
-    {"id":23,"name":"Cheese maggi","price":80,"cat":"MAGGI"},
-    {"id":24,"name":"French fries","price":50,"cat":"FRIES"},
-    {"id":25,"name":"Peri peri french fries","price":60,"cat":"FRIES"},
-    {"id":26,"name":"Cheese french fries","price":100,"cat":"FRIES"},
-    {"id":27,"name":"Bread pagoda","price":15,"cat":"FRIES"},
-    {"id":28,"name":"Fried rice","price":60,"cat":"FRIES"},
-    {"id":29,"name":"Veg biryani","price":60,"cat":"FRIES"},
-    {"id":30,"name":"Chocolate shake","price":80,"cat":"SHAKES"},
-    {"id":31,"name":"Kitkat shake","price":90,"cat":"SHAKES"},
-    {"id":32,"name":"Oreo shake","price":100,"cat":"SHAKES"},
-    {"id":33,"name":"Hot coffee","price":60,"cat":"COFFEE"},
-    {"id":34,"name":"Cold coffee","price":90,"cat":"COFFEE"},
-    {"id":35,"name":"Cold coffee with ice-cream","price":110,"cat":"COFFEE"},
-    {"id":36,"name":"Virgin mojito","price":50,"cat":"MOCKTAIL"},
-    {"id":37,"name":"Watermelon mojito","price":60,"cat":"MOCKTAIL"},
-    {"id":38,"name":"Blue lagoon mojito","price":70,"cat":"MOCKTAIL"},
-    {"id":39,"name":"Honey donut","price":49,"cat":"DONUT"},
-    {"id":40,"name":"Chocolate donut","price":69,"cat":"DONUT"},
-    {"id":41,"name":"Vanilla cupcake","price":69,"cat":"CUPCAKE"},
-    {"id":42,"name":"Blueberry cupcake","price":69,"cat":"CUPCAKE"},
-    {"id":43,"name":"Pineapple cupcake","price":69,"cat":"CUPCAKE"},
-    {"id":44,"name":"Chocolate cupcake","price":79,"cat":"CUPCAKE"},
-    {"id":45,"name":"Choco chip cupcake","price":79,"cat":"CUPCAKE"},
-    {"id":46,"name":"Honey butter waffle","price":59,"cat":"WAFFLE"},
-    {"id":47,"name":"Dark chocolate waffle","price":99,"cat":"WAFFLE"},
-    {"id":48,"name":"White chocolate waffle","price":99,"cat":"WAFFLE"},
-    {"id":49,"name":"Dark chocolate fantasy","price":119,"cat":"WAFFLE"},
-    {"id":50,"name":"Dark chocolate","price":119,"cat":"WAFFLE"},
-    {"id":51,"name":"Ice-cream waffle","price":129,"cat":"WAFFLE"},
-    {"id":52,"name":"Mixnut waffle","price":149,"cat":"WAFFLE"},
-    {"id":53,"name":"Veg momos","price":50,"cat":"MOMOS"},
-    {"id":54,"name":"Paneer momos","price":70,"cat":"MOMOS"},
-    {"id":55,"name":"Vegetable soup","price":30,"cat":"SOUP"},
-    {"id":56,"name":"Kulhad tea","price":15,"cat":"TEA"},
-    {"id":57,"name":"Lemon tea","price":25,"cat":"TEA"},
-    {"id":58,"name":"Green tea","price":35,"cat":"TEA"},
+    {"id":1,"name":"Tomato pizza","cat":"PIZZA","price":79,"img":"🍕","available":True},
+    {"id":2,"name":"Onion pizza","cat":"PIZZA","price":89,"img":"🧅","available":True},
+    {"id":3,"name":"Sweet corn pizza","cat":"PIZZA","price":89,"img":"🌽","available":True},
+    {"id":4,"name":"Margherita pizza","cat":"PIZZA","price":99,"img":"🍕","available":True},
+    {"id":5,"name":"Paneer pizza","cat":"PIZZA","price":149,"img":"🧀","available":True},
+    {"id":6,"name":"Veg hotel pizza","cat":"PIZZA","price":149,"img":"🍕","available":True},
+    {"id":7,"name":"Cheese pizza","cat":"PIZZA","price":179,"img":"🧀","available":True},
+    {"id":8,"name":"Burger","cat":"BURGER","price":40,"img":"🍔","available":True},
+    {"id":9,"name":"Cheese burger","cat":"BURGER","price":60,"img":"🍔","available":True},
+    {"id":10,"name":"Paneer burger","cat":"BURGER","price":70,"img":"🍔","available":True},
+    {"id":11,"name":"Red sauce pasta","cat":"PASTA","price":100,"img":"🍝","available":True},
+    {"id":12,"name":"White sauce pasta","cat":"PASTA","price":120,"img":"🍝","available":True},
+    {"id":13,"name":"Pink sauce pasta","cat":"PASTA","price":130,"img":"🍝","available":True},
+    {"id":14,"name":"Veg sandwich","cat":"SANDWICH","price":50,"img":"🥪","available":True},
+    {"id":15,"name":"Veg loted sandwich","cat":"SANDWICH","price":70,"img":"🥪","available":True},
+    {"id":16,"name":"Paneer sandwich","cat":"SANDWICH","price":80,"img":"🥪","available":True},
+    {"id":17,"name":"Veg hakka noodles","cat":"NOODLES","price":50,"img":"🍜","available":True},
+    {"id":18,"name":"Paneer noodles","cat":"NOODLES","price":70,"img":"🍜","available":True},
+    {"id":19,"name":"Masala maggi","cat":"MAGGI","price":40,"img":"🍜","available":True},
+    {"id":20,"name":"Sazwean maggi","cat":"MAGGI","price":50,"img":"🍜","available":True},
+    {"id":21,"name":"Veg loted maggi","cat":"MAGGI","price":60,"img":"🍜","available":True},
+    {"id":22,"name":"Paneer maggi","cat":"MAGGI","price":70,"img":"🍜","available":True},
+    {"id":23,"name":"Cheese maggi","cat":"MAGGI","price":80,"img":"🧀","available":True},
+    {"id":24,"name":"French fries","cat":"FRIES & MORE","price":50,"img":"🍟","available":True},
+    {"id":25,"name":"Peri peri french fries","cat":"FRIES & MORE","price":60,"img":"🍟","available":True},
+    {"id":26,"name":"Cheese french fries","cat":"FRIES & MORE","price":100,"img":"🍟","available":True},
+    {"id":27,"name":"Bread pagoda","cat":"FRIES & MORE","price":15,"img":"🍞","available":True},
+    {"id":28,"name":"Fried rice","cat":"FRIES & MORE","price":60,"img":"🍚","available":True},
+    {"id":29,"name":"Veg biryani","cat":"FRIES & MORE","price":60,"img":"🍛","available":True},
+    {"id":30,"name":"Chocolate shake","cat":"SHAKES","price":80,"img":"🥤","available":True},
+    {"id":31,"name":"Kitkat shake","cat":"SHAKES","price":90,"img":"🍫","available":True},
+    {"id":32,"name":"Oreo shake","cat":"SHAKES","price":100,"img":"🥤","available":True},
+    {"id":33,"name":"Hot coffee","cat":"COFFEE","price":60,"img":"☕","available":True},
+    {"id":34,"name":"Cold coffee","cat":"COFFEE","price":90,"img":"🧋","available":True},
+    {"id":35,"name":"Cold coffee with ice-cream","cat":"COFFEE","price":110,"img":"🍦","available":True},
+    {"id":36,"name":"Virgin mojito","cat":"MOCKTAIL","price":50,"img":"🍹","available":True},
+    {"id":37,"name":"Watermelon mojito","cat":"MOCKTAIL","price":60,"img":"🍉","available":True},
+    {"id":38,"name":"Blue lagoon mojito","cat":"MOCKTAIL","price":70,"img":"💙","available":True},
+    {"id":39,"name":"Honey donut","cat":"DONUT","price":49,"img":"🍩","available":True},
+    {"id":40,"name":"Chocolate donut","cat":"DONUT","price":69,"img":"🍩","available":True},
+    {"id":41,"name":"Vanilla cupcake","cat":"CUPCAKE","price":69,"img":"🧁","available":True},
+    {"id":42,"name":"Blueberry cupcake","cat":"CUPCAKE","price":69,"img":"🧁","available":True},
+    {"id":43,"name":"Pineapple cupcake","cat":"CUPCAKE","price":69,"img":"🍍","available":True},
+    {"id":44,"name":"Chocolate cupcake","cat":"CUPCAKE","price":79,"img":"🧁","available":True},
+    {"id":45,"name":"Choco chip cupcake","cat":"CUPCAKE","price":79,"img":"🧁","available":True},
+    {"id":46,"name":"Honey butter waffle","cat":"WAFFLE","price":59,"img":"🧇","available":True},
+    {"id":47,"name":"Dark chocolate waffle","cat":"WAFFLE","price":99,"img":"🧇","available":True},
+    {"id":48,"name":"White chocolate waffle","cat":"WAFFLE","price":99,"img":"🧇","available":True},
+    {"id":49,"name":"Dark chocolate fantasy","cat":"WAFFLE","price":119,"img":"🍫","available":True},
+    {"id":50,"name":"Dark chocolate","cat":"WAFFLE","price":119,"img":"🍫","available":True},
+    {"id":51,"name":"Ice-cream waffle","cat":"WAFFLE","price":129,"img":"🍦","available":True},
+    {"id":52,"name":"Mixnut waffle","cat":"WAFFLE","price":149,"img":"🥜","available":True},
+    {"id":53,"name":"Veg momos","cat":"MOMOS","price":50,"img":"🥟","available":True},
+    {"id":54,"name":"Paneer momos","cat":"MOMOS","price":70,"img":"🥟","available":True},
+    {"id":55,"name":"Vegetable soup","cat":"SOUP","price":30,"img":"🍲","available":True},
+    {"id":56,"name":"Kulhad tea","cat":"TEA","price":15,"img":"☕","available":True},
+    {"id":57,"name":"Lemon tea","cat":"TEA","price":25,"img":"🍋","available":True},
+    {"id":58,"name":"Green tea","cat":"TEA","price":35,"img":"🍵","available":True},
 ]
 
-UPI_ID = "BHARATPE2M0M0J3M9G67879@unitype"
-OWNER = "ACHINTYA KUMAR KHARE"
+ORDERS = []
+
+@app.route('/static/qr.jpg')
+def qr_file():
+    # Tere UPI ID se QR generate - file ki zaroorat nahi
+    upi = "BHARATPE2M0M0J3M9G67879@unitype"
+    name = "ACHINTYA KUMAR KHARE"
+    return redirect(f"https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=upi://pay?pa={upi}&pn={name}&cu=INR")
 
 @app.route('/')
-def home():
-    cart=session.get('cart',{}); tot=sum(next((x['price'] for x in MENU if x['id']==int(k)),0)*v for k,v in cart.items()); cnt=sum(cart.values())
-    return render_template_string("""
-<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Adya Cafe - Takeaway</title>
-<style>
-body{font-family:system-ui;margin:0;background:#fff8f0}
-.h{background:#ff6b35;color:white;padding:16px;text-align:center;font-size:22px;font-weight:bold}
-.s{background:#111;color:#ffcc00;padding:8px;text-align:center;font-size:12px}
-.cat{background:#222;color:#ffcc00;padding:6px 12px;margin:15px 10px 5px 10px;border-radius:20px;font-weight:bold;font-size:13px;display:inline-block}
-.c{background:white;margin:8px 10px;border-radius:12px;padding:12px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-.btn{background:#ff6b35;color:white;border:none;padding:8px 16px;border-radius:20px;font-weight:bold}
-.cart{position:fixed;bottom:0;left:0;right:0;background:#111;color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:99}
-</style></head><body>
-<div class="h">ADYA CAFE - Lucknow</div>
-<div class="s">🥡 TAKEAWAY ONLY • 45 Min Me Ready • Payment First</div>
-{% for i in menu %}
-<div class="c"><div><b>{{i.name}}</b> ({{i.cat}})<br>₹{{i.price}}</div><div><a href="/add/{{i.id}}"><button class="btn">Add +</button></a></div></div>
-{% endfor %}
-<div style="height:80px"></div>
-<div class="cart"><div>🛒 {{cnt}} items | ₹{{tot}}</div>{% if tot>0 %}<a href="/checkout"><button class="btn" style="background:#25D366">Pay ₹{{tot}} & Takeaway</button></a>{% endif %}</div>
-</body></html>
-""", menu=MENU, tot=tot, cnt=cnt)
+def index():
+    return INDEX_HTML
 
-@app.route('/add/<int:id>')
-def add(id):
-    cart=session.get('cart',{}); cart[str(id)]=cart.get(str(id),0)+1; session['cart']=cart; return redirect('/')
+@app.route('/api/menu')
+def api_menu():
+    return jsonify(MENU)
 
-@app.route('/checkout')
-def checkout():
-    cart=session.get('cart',{}); tot=sum(next((x['price'] for x in MENU if x['id']==int(k)),0)*v for k,v in cart.items()); cnt=sum(cart.values())
-    if tot==0: return redirect('/')
-    return render_template_string(f"""
-<html><head><meta name='viewport' content='width=device-width,initial-scale=1'><style>body{{font-family:system-ui;background:#fff8f0;padding:16px}}.b{{background:white;border-radius:16px;padding:20px;text-align:center}}.btn{{width:100%;padding:14px;border:none;border-radius:12px;font-weight:bold;margin-top:10px}}.qr{{width:280px}}.btn-pay{{background:#111;color:white}}.btn-upi{{background:#25D366;color:white}}input{{width:100%;padding:12px;margin:6px 0;border-radius:8px;border:1px solid #ccc;box-sizing:border-box}}</style></head><body>
-<div class='b'><h2>🥡 Takeaway - 45 Min</h2><p>Order: <b>₹{tot}</b> ({cnt} items)<br><b style='color:green'>⏱️ 45 Min Me Ready</b></p>
-<img src='/static/qr.jpg' class='qr'><p><b>{OWNER}</b><br><code>{UPI_ID}</code></p>
-<a href='upi://pay?pa={UPI_ID}&pn={OWNER}&am={tot}&cu=INR'><button class='btn btn-upi'>📲 UPI Se ₹{tot} Pay Karo</button></a>
-<form method='POST' action='/confirm' style='text-align:left;margin-top:15px'>
-<input name='name' placeholder='Naam *' required><input name='phone' placeholder='Mobile * (Call isi pe jayegi)' required>
-<input name='utr' placeholder='UTR / Transaction ID * Compulsory' required style='border:2px solid #ff6b35'>
-<div style='background:#fff3cd;padding:10px;border-radius:8px;margin:10px 0;font-size:13px'>⏱️ 45 Min Fixed<br>Ready hote hi call aayegi<br>📍 Adya Cafe - Takeaway Only</div>
-<label style='font-size:13px'><input type='checkbox' required> Maine payment kiya hai, 45 min me khud lene aaunga</label>
-<button class='btn btn-pay'>✅ Payment Done - Order Confirm</button></form></div></body></html>
-""")
+@app.route('/api/order', methods=['POST'])
+def api_order():
+    data = request.get_json()
+    order_id = len(ORDERS) + 1
+    final_total = data.get('total', 0)
+    coupon = data.get('coupon','')
+    if coupon == 'ADYASUNDAY' and datetime.now().weekday() == 6:
+        final_total = int(final_total * 0.8)
+    ORDERS.append({"id": order_id, "data": data, "time": str(datetime.now()), "final": final_total})
+    return jsonify({"order_id": order_id, "final_total": final_total})
 
-@app.route('/confirm', methods=['POST'])
-def confirm():
-    cart=session.get('cart',{}); tot=sum(next((x['price'] for x in MENU if x['id']==int(k)),0)*v for k,v in cart.items())
-    name=request.form.get('name'); phone=request.form.get('phone'); utr=request.form.get('utr')
-    print(f"NEW TAKEAWAY 45MIN ORDER: {name} {phone} Rs{tot} UTR:{utr}")
-    session['cart']={}
-    return f"<html><body style='font-family:system-ui;background:#e8f5e9;text-align:center;padding:30px'><div style='background:white;padding:30px;border-radius:16px'><h1>✅</h1><h2>Order Confirmed!</h2><p><b>Token: ADYA{phone[-4:]}</b></p><p>{name}<br>Rs {tot} Paid<br>UTR: {utr}<br>Phone: {phone}</p><div style='background:#d4edda;padding:15px;border-radius:10px;margin:15px 0'>⏱️ 45 Min me ready!<br>Call aayegi {phone} pe<br>📍 Adya Cafe</div><a href='/'><button style='padding:12px 20px;background:#ff6b35;color:white;border:none;border-radius:8px'>New Order</button></a></div></body></html>"
+INDEX_HTML = """
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADYA CAFE - Lucknow</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>body{font-family:'Poppins',sans-serif}</style>
+</head>
+<body class="bg-[#FFF8F0] min-h-screen">
+<div class="bg-[#FF6B35] text-white p-4 sticky top-0 z-40 shadow">
+<div class="max-w-6xl mx-auto flex justify-between items-center">
+<div><h1 class="text-xl font-bold">ADYA CAFE - Lucknow</h1><p class="text-xs opacity-90">TAKEAWAY ONLY • 45 Min Me Ready • Payment First</p></div>
+<button onclick="toggleCart()" class="bg-white text-[#FF6B35] px-4 py-2 rounded-full font-bold text-sm">🛒 <span id="cart-count">0</span> | ₹<span id="cart-total-mini">0</span></button>
+</div></div>
+<div class="max-w-6xl mx-auto px-3 mt-3">
+<div class="bg-gradient-to-r from-orange-500 to-red-500 rounded-xl p-3 text-white flex justify-between items-center"><div><p class="font-bold">Sunday Special 🎉 ADYASUNDAY - 20% OFF</p><p class="text-xs">Sirf Sunday ko valid</p></div><div class="text-3xl">🍕</div></div>
+<input id="search" oninput="renderMenu()" placeholder="Search pizza, burger, maggi, waffle, tea..." class="w-full p-3 rounded-xl border mt-3">
+<div id="categories" class="flex gap-2 overflow-x-auto mt-3 pb-2"></div>
+</div>
+<div class="max-w-6xl mx-auto px-3 mt-3 pb-24"><div id="menu-grid" class="grid grid-cols-1 gap-3"></div></div>
+<div id="cart-drawer" class="fixed inset-0 bg-black/50 hidden z-50">
+<div class="absolute bottom-0 w-full max-w-md right-0 left-0 mx-auto bg-white rounded-t-3xl max-h-[90vh] flex flex-col">
+<div class="p-4 border-b flex justify-between items-center"><h2 class="font-bold text-lg">🥡 Takeaway - 45 Min</h2><button onclick="toggleCart()" class="text-2xl">×</button></div>
+<div class="p-4 flex-1 overflow-y-auto">
+<p class="text-center">Order: ₹<span id="cart-order-total">0</span> (<span id="cart-items-count">0</span> items)</p>
+<p class="text-center text-green-600 font-bold">⏱ 45 Min Me Ready</p>
+<div class="bg-white border-2 rounded-2xl p-3 mt-4 flex flex-col items-center">
+<img id="qr-img" src="/static/qr.jpg" class="w-64 h-64 object-contain border rounded-xl">
+<p class="font-bold mt-3">ACHINTYA KUMAR KHARE</p>
+<p class="text-xs font-mono break-all text-center">BHARATPE2M0M0J3M9G67879@unitype</p>
+</div>
+<div id="cart-items" class="space-y-2 mt-4"></div>
+<div class="flex gap-2 mt-4"><input id="coupon" placeholder="Coupon ADYASUNDAY" class="flex-1 p-3 rounded-xl border text-sm"><button onclick="applyCoupon()" class="bg-black text-white px-5 rounded-xl text-sm">Apply</button></div>
+<p id="coupon-msg" class="text-xs mt-1"></p>
+<div class="space-y-1 text-sm mt-3 bg-gray-50 p-3 rounded-xl"><div class="flex justify-between"><span>Subtotal</span><span id="subtotal">₹0</span></div><div class="flex justify-between text-green-600 hidden" id="discount-row"><span>Discount</span><span id="discount">-₹0</span></div><div class="flex justify-between font-bold text-lg"><span>Total</span><span id="final-total">₹0</span></div></div>
+<input id="cust-name" placeholder="Naam *" class="w-full p-3 rounded-xl border mt-3">
+<input id="cust-phone" placeholder="Mobile * (Call isi pe jayegi)" class="w-full p-3 rounded-xl border mt-2">
+<input id="cust-utr" placeholder="UTR / Transaction ID * Compulsory" class="w-full p-3 rounded-xl border-2 border-orange-500 mt-2">
+<button onclick="placeOrder()" class="w-full bg-[#22c55e] text-white py-3 rounded-xl font-bold text-lg mt-3">📱 UPI Se ₹<span id="btn-total">0</span> Pay Karo</button>
+</div></div></div>
+<div class="fixed bottom-0 left-0 right-0 bg-black text-white p-3 flex justify-between items-center z-30"><span>🛒 <span id="bottom-count">0</span> items | ₹<span id="bottom-total">0</span></span><button onclick="toggleCart()" class="bg-[#22c55e] px-5 py-2 rounded-full font-bold text-sm">Pay ₹<span id="bottom-pay">0</span> & Takeaway</button></div>
+<script>
+let MENU=[],CART={},CATEGORY='ALL',COUPON='',DISCOUNT=0,_subtotal=0;
+async function loadMenu(){const r=await fetch('/api/menu');MENU=await r.json();buildCategories();renderMenu();}
+function buildCategories(){const cats=['ALL',...new Set(MENU.map(m=>m.cat))];document.getElementById('categories').innerHTML=cats.map(c=>`<button onclick="setCat('${c}')" class="px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${CATEGORY===c?'bg-[#FF6B35] text-white':'bg-white border'}">${c}</button>`).join('');}
+function setCat(c){CATEGORY=c;buildCategories();renderMenu();}
+function renderMenu(){const q=document.getElementById('search').value.toLowerCase();let f=MENU.filter(m=>{const mc=CATEGORY==='ALL'||m.cat===CATEGORY;const mq=m.name.toLowerCase().includes(q);return mc&&mq;});document.getElementById('menu-grid').innerHTML=f.map(item=>`<div class="bg-white rounded-2xl p-4 shadow-sm flex justify-between items-center"><div><h3 class="font-bold text-base">${item.img} ${item.name} <span class="text-xs font-normal text-gray-500">(${item.cat})</span></h3><p class="font-bold mt-1">₹${item.price}</p></div><div>${CART[item.id]?`<div class="flex items-center gap-2 bg-[#FFF0E8] rounded-full p-1"><button onclick="updateQty(${item.id},-1)" class="w-8 h-8 rounded-full bg-white shadow font-bold">-</button><span class="w-6 text-center font-bold text-sm">${CART[item.id]}</span><button onclick="updateQty(${item.id},1)" class="w-8 h-8 rounded-full bg-[#FF6B35] text-white font-bold">+</button></div>`:`<button onclick="updateQty(${item.id},1)" class="bg-[#FF6B35] text-white px-6 py-2 rounded-full font-bold text-sm">Add +</button>`}</div></div>`).join('');}
+function updateQty(id,d){CART[id]=(CART[id]||0)+d;if(CART[id]<=0)delete CART[id];renderMenu();renderCart();}
+function renderCart(){const ids=Object.keys(CART);let sub=0,html='',cnt=0;ids.forEach(id=>{const item=MENU.find(m=>m.id==id);const qty=CART[id];sub+=item.price*qty;cnt+=qty;html+=`<div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl"><div><p class="font-semibold text-sm">${item.name}</p><p class="text-xs">₹${item.price} x ${qty}</p></div><div class="flex items-center gap-2"><button onclick="updateQty(${id},-1)" class="w-7 h-7 bg-white rounded-full shadow">-</button><span class="text-sm font-bold">${qty}</span><button onclick="updateQty(${id},1)" class="w-7 h-7 bg-[#FF6B35] text-white rounded-full">+</button></div></div>`;});if(!ids.length)html='<p class="text-center text-gray-400 mt-6">Cart empty hai 🍕</p>';document.getElementById('cart-items').innerHTML=html;_subtotal=sub;const total=sub-DISCOUNT;document.getElementById('subtotal').innerText='₹'+sub;document.getElementById('final-total').innerText='₹'+total;document.getElementById('btn-total').innerText=total;document.getElementById('cart-order-total').innerText=total;document.getElementById('cart-items-count').innerText=cnt;document.getElementById('cart-count').innerText=cnt;document.getElementById('cart-total-mini').innerText=total;document.getElementById('bottom-count').innerText=cnt;document.getElementById('bottom-total').innerText=total;document.getElementById('bottom-pay').innerText=total;document.getElementById('discount').innerText='-₹'+DISCOUNT;document.getElementById('discount-row').classList.toggle('hidden',DISCOUNT===0);document.getElementById('qr-img').src=`/static/qr.jpg?amount=${total}&t=${Date.now()}`;}
+function toggleCart(){document.getElementById('cart-drawer').classList.toggle('hidden');}
+function applyCoupon(){const code=document.getElementById('coupon').value.trim().toUpperCase();if(code==='ADYASUNDAY'){if(new Date().getDay()!==0){document.getElementById('coupon-msg').innerHTML='<span class="text-red-500">Sirf Sunday ko valid hai!</span>';return;}DISCOUNT=Math.floor(_subtotal*0.2);COUPON=code;document.getElementById('coupon-msg').innerHTML='<span class="text-green-600">20% OFF lag gaya!</span>';}else if(code===''){DISCOUNT=0;COUPON='';document.getElementById('coupon-msg').innerHTML='';}else{document.getElementById('coupon-msg').innerHTML='<span class="text-red-500">Invalid coupon</span>';DISCOUNT=0;}renderCart();}
+async function placeOrder(){const name=document.getElementById('cust-name').value.trim();const phone=document.getElementById('cust-phone').value.trim();const utr=document.getElementById('cust-utr').value.trim();if(!Object.keys(CART).length)return alert('Cart khali hai!');if(!name||!phone)return alert('Naam aur Mobile bharo!');if(!utr)return alert('UTR / Transaction ID dalna compulsory hai!');const items=Object.keys(CART).map(id=>{const m=MENU.find(x=>x.id==id);return{id:m.id,name:m.name,price:m.price,qty:CART[id]};});const body={items,total:_subtotal,coupon:COUPON,name,phone,utr};const res=await fetch('/api/order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await res.json();alert('Order Placed! ID: #'+data.order_id+' Final: ₹'+data.final_total);CART={};COUPON='';DISCOUNT=0;document.getElementById('coupon').value='';renderMenu();renderCart();toggleCart();}
+loadMenu();
+</script></body></html>
+"""
 
-if __name__=='__main__':
-    app.run(host='0.0.0.0', port=10000)
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
