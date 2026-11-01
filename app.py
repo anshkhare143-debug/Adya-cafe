@@ -10,9 +10,13 @@ def home():
 def admin():
     return render_template('index.html')
 
-@app.route('/qr.jpg')
+@app.route('/IMG-20261022-WA0015.jpg')
 def qr():
-    return send_from_directory('.', 'qr.jpg')
+    return send_from_directory('.', 'IMG-20261022-WA0015.jpg')
+
+@app.route('/qr.jpg')
+def qr2():
+    return send_from_directory('.', 'IMG-20261022-WA0015.jpg')
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 10000))
