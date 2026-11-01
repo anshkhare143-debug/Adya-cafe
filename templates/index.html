@@ -6,18 +6,19 @@
 <title>ADYA CAFE - Lucknow</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
-body{background:#fdf6f0;padding-bottom:80px}
+body{background:#fdf6f0;padding-bottom:85px}
 .header{background:#ff6a28;color:#fff;padding:14px 16px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
-.header h1{font-size:20px;font-weight:900}
+.header h1{font-size:19px;font-weight:900;line-height:1.2}
+.header p{font-size:11px;opacity:.9}
 .cart-top{background:#fff;color:#ff6a28;padding:8px 14px;border-radius:25px;font-weight:800;font-size:14px;cursor:pointer}
 .banner{background:linear-gradient(135deg,#ff7a28,#ff2e2e);color:#fff;margin:12px;border-radius:16px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
 .banner h2{font-size:15px;font-weight:800}
-.search{margin:0 12px;background:#fff;border-radius:14px;padding:12px 14px;display:flex;align-items:center}
+.search{margin:0 12px;background:#fff;border-radius:14px;padding:12px 14px;display:flex;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .search input{border:0;outline:none;width:100%;font-size:15px;margin-left:8px}
-.cats{display:flex;gap:10px;padding:12px;overflow-x:auto;white-space:nowrap}
-.cat{background:#fff;border:1px solid #eee;padding:8px 18px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer}
-.cat.active{background:#ff6a28;color:#fff}
-.item{background:#fff;margin:10px 12px;border-radius:16px;padding:14px;display:flex;justify-content:space-between;align-items:center}
+.cats{display:flex;gap:10px;padding:12px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+.cat{background:#fff;border:1px solid #eee;padding:8px 18px;border-radius:20px;font-weight:700;font-size:14px;cursor:pointer;flex-shrink:0}
+.cat.active{background:#ff6a28;color:#fff;border-color:#ff6a28}
+.item{background:#fff;margin:10px 12px;border-radius:16px;padding:14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.04)}
 .price{font-weight:900;font-size:16px;margin-top:4px}
 .add{background:#ff6a28;color:#fff;border:0;padding:8px 20px;border-radius:20px;font-weight:800;cursor:pointer}
 .qty-box{background:#fff2ec;border:1px solid #ff6a28;border-radius:20px;display:flex;align-items:center;gap:12px;padding:4px 6px}
@@ -25,16 +26,23 @@ body{background:#fdf6f0;padding-bottom:80px}
 .qty-box button.plus{background:#ff6a28;color:#fff}
 .qty{font-weight:800;min-width:14px;text-align:center}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#000;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:20}
-.pay{background:#00c853;color:#fff;border:0;padding:10px 22px;border-radius:25px;font-weight:900;font-size:16px;cursor:pointer}
+.pay{background:#00c853;color:#fff;border:0;padding:11px 22px;border-radius:25px;font-weight:900;font-size:16px;cursor:pointer}
 .hidden{display:none}
-.form-page{max-width:480px;margin:0 auto;background:#fff;min-height:100vh;padding:12px}
-.form-page input,.form-page textarea,.form-page select{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px;font-size:15px}
-.qr-box{text-align:center;border:2px dashed #ff6a28;margin:12px;border-radius:14px;padding:12px;background:#fff8f4}
-.btn-main{background:#000;color:#fff;width:100%;padding:14px;border:0;border-radius:12px;font-size:16px;font-weight:900;margin-top:10px;cursor:pointer}
-.admin-card{border:2px solid #000;margin:10px 0;padding:12px;border-radius:10px;background:#fff9f9;font-size:14px;line-height:1.5}
-.btn-acc{background:#00c853;color:#fff;border:0;padding:8px 14px;border-radius:6px;font-weight:800;margin:5px;cursor:pointer}
-.btn-rej{background:#ff3b30;color:#fff;border:0;padding:8px 14px;border-radius:6px;font-weight:800;margin:5px;cursor:pointer}
+.form-page{max-width:480px;margin:0 auto;background:#fff;min-height:100vh;padding:0 0 20px 0}
+.form-header{padding:16px;background:#000;color:#fff}
+.form-body{padding:14px}
+.card{background:#fff;border:1px solid #eee;border-radius:16px;padding:14px;margin:10px 0;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.card h3{font-size:14px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.form-page input,.form-page textarea,.form-page select{width:100%;padding:13px;margin:6px 0;border:1.5px solid #e5e5e5;border-radius:12px;font-size:15px;outline:none;transition:.2s}
+.form-page input:focus,.form-page textarea:focus,.form-page select:focus{border-color:#ff6a28;background:#fffaf6}
+.qr-box{text-align:center;border:2px dashed #ff6a28;border-radius:16px;padding:14px;background:linear-gradient(180deg,#fff8f4,#fff);margin:12px 0}
+.btn-main{background:#000;color:#fff;width:100%;padding:15px;border:0;border-radius:14px;font-size:17px;font-weight:900;margin-top:10px;cursor:pointer}
+.btn-sec{width:100%;padding:13px;margin-top:10px;background:#fff;border:1.5px solid #000;border-radius:14px;font-weight:700;cursor:pointer}
+.admin-card{border:2px solid #000;margin:10px 0;padding:12px;border-radius:12px;background:#fff9f9;font-size:14px;line-height:1.5}
+.btn-acc{background:#00c853;color:#fff;border:0;padding:9px 16px;border-radius:8px;font-weight:800;margin:5px;cursor:pointer}
+.btn-rej{background:#ff3b30;color:#fff;border:0;padding:9px 16px;border-radius:8px;font-weight:800;margin:5px;cursor:pointer}
 #loader{position:fixed;inset:0;background:rgba(0,0,0,0.85);color:#fff;display:none;align-items:center;justify-content:center;flex-direction:column;z-index:100}
+.badge{display:inline-block;background:#ffefe6;color:#ff6a28;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:800}
 </style>
 </head>
 <body>
@@ -42,8 +50,8 @@ body{background:#fdf6f0;padding-bottom:80px}
 
 <div id="shopView">
 <div class="header"><div><h1>ADYA CAFE - Lucknow</h1><p>TAKEAWAY ONLY • 45 Min • Payment First</p></div><div class="cart-top" onclick="openCart()">🛒 <span id="cartCountTop">0</span> | ₹<span id="cartTotalTop">0</span></div></div>
-<div class="banner"><div><h2>Sunday ADYASUNDAY - 500 pe 50 OFF</h2><p>Coupon: ADYASUNDAY</p></div><div style="font-size:32px">🍕</div></div>
-<div class="search">🔍 <input id="searchInput" oninput="filterItems()" placeholder="Search..."></div>
+<div class="banner"><div><h2>ADYA50 - 500 pe 50 OFF</h2><p>Coupon: ADYA50 • 500+ pe 50 OFF</p></div><div style="font-size:32px">🎉</div></div>
+<div class="search">🔍 <input id="searchInput" oninput="filterItems()" placeholder="Search pizza, burger..."></div>
 <div class="cats" id="cats"></div>
 <div id="shopStatus"></div>
 <div id="itemsList"></div>
@@ -51,37 +59,87 @@ body{background:#fdf6f0;padding-bottom:80px}
 
 <div id="checkoutView" class="hidden">
 <div class="form-page">
-<h2>Checkout - ADYA FOODS</h2>
+<div class="form-header">
+<h2 style="font-size:20px">Checkout - ADYA FOODS</h2>
+<p style="opacity:.8;font-size:13px;margin-top:4px">Takeaway FREE • Delivery +₹30 (1KM)</p>
+</div>
+<div class="form-body">
+
+<div class="card">
+<h3>👤 Customer Details</h3>
 <input id="custName" placeholder="Naam / Name *">
-<input id="custMobile" placeholder="Mobile No. * (10 digit)">
-<textarea id="custAddress" placeholder="Pura Address * (Takeaway)"></textarea>
-<select id="orderType"><option value="takeaway">Takeaway (FREE)</option><option value="delivery">Delivery (+₹30)</option></select>
-<input id="couponInput" placeholder="Coupon ADYASUNDAY (500 pe 50 OFF)"><button onclick="applyCoupon()" style="padding:8px 12px;margin:5px 0;background:#fff3e0;border:1px dashed #ff6a28;border-radius:5px;font-weight:700">Apply Coupon</button><div id="couponMsg" style="color:green;font-weight:700"></div>
-<input id="utrInput" placeholder="UTR No. * (Payment ke baad)">
-<div class="qr-box"><p style="font-weight:900">Pehle Payment Karo</p><img src="IMG-20261022-WA0015.jpg" style="width:280px;margin:10px;border-radius:10px"><p style="font-weight:800">ACHINTYA KUMAR KHARE</p></div>
-<div style="background:#f9f9f9;padding:12px;border-radius:10px"><div style="display:flex;justify-content:space-between"><span>Subtotal</span><span id="subtotal">₹0</span></div><div style="display:flex;justify-content:space-between"><span>Delivery</span><span id="deliveryCharge">₹0</span></div><div style="display:flex;justify-content:space-between"><span>Discount</span><span id="discount">-₹0</span></div><div style="display:flex;justify-content:space-between;font-weight:900;font-size:18px;border-top:2px solid #000"><span>Total</span><span id="total">₹0</span></div></div>
-<button class="btn-main" onclick="placeOrder()">Pay & Order - ₹<span id="payTotal">0</span></button><button onclick="backToShop()" style="width:100%;padding:12px;margin-top:10px;background:#fff;border:1px solid #000;border-radius:10px">← Back</button>
+<input id="custMobile" type="tel" placeholder="Mobile No. * (10 digit)">
+<textarea id="custAddress" rows="2" placeholder="Pura Address * (Takeaway)"></textarea>
+</div>
+
+<div class="card">
+<h3>🛵 Order Type</h3>
+<select id="orderType">
+<option value="takeaway">Takeaway (FREE) - Shop se lena hai toh FREE</option>
+<option value="delivery">Delivery (+₹30) - Delivery karni hai toh ₹30 lagega</option>
+</select>
+<p style="font-size:11px;color:#666;margin-top:6px;background:#f6f6f6;padding:6px 8px;border-radius:8px">💡 Takeaway lena hai toh FREE hai, Delivery karwani hai toh ₹30 charge lagega (1KM ke andar)</p>
+</div>
+
+<div class="card">
+<h3>🎁 Coupon <span class="badge">ADYA50</span></h3>
+<div style="display:flex;gap:8px">
+<input id="couponInput" placeholder="Coupon ADYA50" style="flex:1;margin:0">
+<button onclick="applyCoupon()" style="padding:12px 14px;background:#000;color:#fff;border:0;border-radius:12px;font-weight:800;white-space:nowrap">Apply</button>
+</div>
+<div id="couponMsg" style="color:#00a651;font-weight:700;font-size:13px;margin-top:8px"></div>
+<p style="font-size:11px;color:#888;margin-top:4px">500+ pe 50 OFF • Code: ADYA50</p>
+</div>
+
+<div class="card">
+<h3>💳 Payment Details</h3>
+<input id="utrInput" placeholder="UTR No. *">
+<div class="qr-box">
+<p style="font-weight:900;font-size:15px">📱 Pehle Payment Karo</p>
+<p style="font-size:12px;color:#666;margin:4px 0">QR Scan karke pay karo, fir UTR bharo</p>
+<img src="IMG-20261022-WA0015.jpg" style="width:260px;max-width:100%;margin:10px;border-radius:12px;border:1px solid #eee">
+<p style="font-weight:800;margin-top:6px">ACHINTYA KUMAR KHARE</p>
+<p style="font-size:11px;color:#888">BharatPe QR</p>
+</div>
+</div>
+
+<div class="card" style="background:#fafafa">
+<div style="display:flex;justify-content:space-between;margin:6px 0"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+<div style="display:flex;justify-content:space-between;margin:6px 0"><span>Delivery Charge</span><span id="deliveryCharge">₹0</span></div>
+<div style="display:flex;justify-content:space-between;margin:6px 0;color:#00a651"><span>Discount (ADYA50)</span><span id="discount">-₹0</span></div>
+<div style="display:flex;justify-content:space-between;font-weight:900;font-size:19px;border-top:2px solid #000;margin-top:10px;padding-top:10px"><span>Total Pay</span><span id="total">₹0</span></div>
+</div>
+
+<button class="btn-main" onclick="placeOrder()">✅ Pay & Order - ₹<span id="payTotal">0</span></button>
+<button onclick="backToShop()" class="btn-sec">← Back to Menu</button>
+
+</div>
 </div>
 </div>
 
 <div class="bottom" id="bottomBar"><div>🛒 <span id="cartCount">0</span> | ₹<span id="cartTotal">0</span></div><button class="pay" onclick="openCart()">Pay ₹<span id="payBottom">0</span></button></div>
 
 <div id="adminView" class="hidden" style="max-width:600px;margin:0 auto;background:#fff;min-height:100vh;padding:12px">
-<h2>Admin Panel - ADYA CAFE</h2>
-<button onclick="toggleShop()" id="toggleBtn" style="padding:10px;background:#ff3b30;color:#fff;border:0;border-radius:5px">Shop OFF Karo</button>
-<button onclick="clearOrders()" style="padding:10px;background:#000;color:#fff;border:0;border-radius:5px">Clear All</button>
-<button onclick="location.href='/'" style="padding:10px;background:#eee;border:1px solid #000;border-radius:5px">Back</button>
-<div style="background:#fff3e0;padding:10px;border-radius:10px;margin:10px 0"><b>Status:</b> <span id="adminShopStatus">OPEN</span> | <b>Orders:</b> <span id="adminOrderCount">0</span></div>
-<h3>Live Orders - Accept / Reject</h3>
-<div id="adminOrders"></div>
+<h2>Admin Panel - ADYA CAFE 🔔</h2>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0">
+<button onclick="enableRing()" id="ringBtn" style="padding:10px 14px;background:#00c853;color:#fff;border:0;border-radius:8px;font-weight:900">🔔 Ring ON Karo</button>
+<button onclick="stopRing()" style="padding:10px 14px;background:#ff9800;color:#fff;border:0;border-radius:8px;font-weight:800">🔕 Ring Band</button>
+<button onclick="toggleShop()" id="toggleBtn" style="padding:10px 14px;background:#ff3b30;color:#fff;border:0;border-radius:8px">Shop OFF Karo</button>
+<button onclick="clearOrders()" style="padding:10px 14px;background:#000;color:#fff;border:0;border-radius:8px">Clear All</button>
+<button onclick="location.href='/'" style="padding:10px 14px;background:#eee;border:1px solid #000;border-radius:8px">Back</button>
 </div>
-
-<script>
+<div style="background:#fff3e0;padding:10px;border-radius:10px;margin:10px 0;display:flex;gap:14px;flex-wrap:wrap"><span><b>Status:</b> <span id="adminShopStatus">OPEN</span></span><span><b>Orders:</b> <span id="adminOrderCount">0</span></span><span><b>Ring:</b> <span id="ringStatus" style="color:red;font-weight:900">OFF</span></span></div>
+<div id="adminOrders"></div>
+<audio id="orderSound" loop preload="auto">
+<source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+</audio>
+</div><script>
 const ITEMS=[{name:"Tomato pizza",price:79,cat:"PIZZA",emoji:"🍕"},{name:"Onion pizza",price:89,cat:"PIZZA",emoji:"🧅"},{name:"Sweet corn pizza",price:89,cat:"PIZZA",emoji:"🌽"},{name:"Margherita pizza",price:99,cat:"PIZZA",emoji:"🍕"},{name:"Paneer pizza",price:149,cat:"PIZZA",emoji:"🍕"},{name:"Veg hotel pizza",price:149,cat:"PIZZA",emoji:"🍕"},{name:"Cheese pizza",price:179,cat:"PIZZA",emoji:"🧀"},{name:"Burger",price:40,cat:"BURGER",emoji:"🍔"},{name:"Cheese burger",price:60,cat:"BURGER",emoji:"🍔"},{name:"Paneer burger",price:70,cat:"BURGER",emoji:"🍔"},{name:"Red sauce pasta",price:100,cat:"PASTA",emoji:"🍝"},{name:"White sauce pasta",price:120,cat:"PASTA",emoji:"🍝"},{name:"Pink sauce pasta",price:130,cat:"PASTA",emoji:"🍝"},{name:"Veg sandwich",price:50,cat:"SANDWICH",emoji:"🥪"},{name:"Veg loted sandwich",price:70,cat:"SANDWICH",emoji:"🥪"},{name:"Paneer sandwich",price:80,cat:"SANDWICH",emoji:"🥪"},{name:"Veg hakka noodles",price:50,cat:"NOODLES",emoji:"🍜"},{name:"Paneer noodles",price:70,cat:"NOODLES",emoji:"🍜"},{name:"Masala maggi",price:40,cat:"MAGGI",emoji:"🍜"},{name:"Sazwean maggi",price:50,cat:"MAGGI",emoji:"🍜"},{name:"Veg loted maggi",price:60,cat:"MAGGI",emoji:"🍜"},{name:"Paneer maggi",price:70,cat:"MAGGI",emoji:"🍜"},{name:"Cheese maggi",price:80,cat:"MAGGI",emoji:"🍜"},{name:"French fries",price:50,cat:"FRIES",emoji:"🍟"},{name:"Peri peri french fries",price:60,cat:"FRIES",emoji:"🍟"},{name:"Cheese french fries",price:100,cat:"FRIES",emoji:"🍟"},{name:"Bread pagoda",price:15,cat:"SNACKS",emoji:"🍞"},{name:"Fried rice",price:60,cat:"RICE",emoji:"🍚"},{name:"Veg biryani",price:60,cat:"RICE",emoji:"🍚"},{name:"Chocolate shake",price:80,cat:"SHAKE",emoji:"🥤"},{name:"Kitkat shake",price:90,cat:"SHAKE",emoji:"🥤"},{name:"Oreo shake",price:100,cat:"SHAKE",emoji:"🥤"},{name:"Hot coffee",price:60,cat:"COFFEE",emoji:"☕"},{name:"Cold coffee",price:90,cat:"COFFEE",emoji:"☕"},{name:"Cold coffee with ice-cream",price:110,cat:"COFFEE",emoji:"☕"},{name:"Virgin mojito",price:50,cat:"MOJITO",emoji:"🍹"},{name:"Watermelon mojito",price:60,cat:"MOJITO",emoji:"🍹"},{name:"Blue lagoon mojito",price:70,cat:"MOJITO",emoji:"🍹"},{name:"Honey donut",price:49,cat:"DONUT",emoji:"🍩"},{name:"Chocolate donut",price:69,cat:"DONUT",emoji:"🍩"},{name:"Vanilla cupcake",price:69,cat:"CUPCAKE",emoji:"🧁"},{name:"Blueberry cupcake",price:69,cat:"CUPCAKE",emoji:"🧁"},{name:"Pineapple cupcake",price:69,cat:"CUPCAKE",emoji:"🧁"},{name:"Chocolate cupcake",price:79,cat:"CUPCAKE",emoji:"🧁"},{name:"Choco chip cupcake",price:79,cat:"CUPCAKE",emoji:"🧁"},{name:"Honey butter waffle",price:59,cat:"WAFFLE",emoji:"🧇"},{name:"Dark chocolate waffle",price:99,cat:"WAFFLE",emoji:"🧇"},{name:"White chocolate waffle",price:99,cat:"WAFFLE",emoji:"🧇"},{name:"Dark chocolate fantasy",price:119,cat:"WAFFLE",emoji:"🧇"},{name:"Dark chocolate",price:119,cat:"WAFFLE",emoji:"🧇"},{name:"Ice-cream woffle",price:129,cat:"WAFFLE",emoji:"🧇"},{name:"Mixnut waffle",price:149,cat:"WAFFLE",emoji:"🧇"},{name:"Veg momos",price:50,cat:"MOMOS",emoji:"🥟"},{name:"Paneer momos",price:70,cat:"MOMOS",emoji:"🥟"},{name:"Vegetable soup",price:30,cat:"SOUP",emoji:"🍲"},{name:"Kulhad tea",price:15,cat:"TEA",emoji:"☕"},{name:"Lemon tea",price:25,cat:"TEA",emoji:"🍋"},{name:"Green tea",price:35,cat:"TEA",emoji:"🍵"}];
 let cart={};let couponDiscount=0;let activeCat='ALL';let searchQ='';let shopOpen=true;
 const CATS=['ALL','PIZZA','BURGER','PASTA','SANDWICH','MAGGI','WAFFLE','SHAKE','FRIES','MOJITO'];
+let ringEnabled=false;let lastOrderCount=parseInt(localStorage.getItem('lastOrderCount')||'0');let ringInterval=null;
 function initShop(){let s=localStorage.getItem('shopOpen');if(s!==null) shopOpen=s==='true';updateShopUI();}
-function updateShopUI(){let el=document.getElementById('shopStatus');let adminS=document.getElementById('adminShopStatus');let btn=document.getElementById('toggleBtn');if(!shopOpen){if(el) el.innerHTML='<div style="text-align:center;padding:40px;background:#fff;margin:20px;border-radius:16px"><h2>🔴 Shop Closed</h2></div>';if(adminS) adminS.innerText='CLOSED';if(btn){btn.innerText='Shop ON Karo';btn.style.background='#00c853';}}else{if(el) el.innerHTML='';if(adminS) adminS.innerText='OPEN';if(btn){btn.innerText='Shop OFF Karo';btn.style.background='#ff3b30';}}}
+function updateShopUI(){let el=document.getElementById('shopStatus');let adminS=document.getElementById('adminShopStatus');let btn=document.getElementById('toggleBtn');if(!shopOpen){if(el) el.innerHTML='<div style="text-align:center;padding:40px;background:#fff;margin:20px;border-radius:16px"><h2>🔴 Shop Closed</h2><p>Abhi band hai</p></div>';if(adminS) adminS.innerText='CLOSED';if(btn){btn.innerText='Shop ON Karo';btn.style.background='#00c853';}}else{if(el) el.innerHTML='';if(adminS) adminS.innerText='OPEN';if(btn){btn.innerText='Shop OFF Karo';btn.style.background='#ff3b30';}}}
 function toggleShop(){shopOpen=!shopOpen;localStorage.setItem('shopOpen',shopOpen);updateShopUI();renderItems();}
 function renderCats(){let h='';CATS.forEach(c=>{h+=`<div class="cat ${activeCat===c?'active':''}" onclick="setCat('${c}')">${c}</div>`});document.getElementById('cats').innerHTML=h;}
 function setCat(c){activeCat=c;renderCats();renderItems();}
@@ -92,12 +150,55 @@ function removeFromCart(i){if(cart[i]){cart[i]--;if(cart[i]<=0)delete cart[i];}r
 function updateCart(){let s=0,c=0;Object.keys(cart).forEach(k=>{s+=ITEMS[k].price*cart[k];c+=cart[k];});let delivery=document.getElementById('orderType')? (document.getElementById('orderType').value==='delivery'?30:0) : 0;let t=s+delivery-couponDiscount;if(t<0)t=0;document.getElementById('cartCount').innerText=c;document.getElementById('cartTotal').innerText=s;document.getElementById('payBottom').innerText=t;document.getElementById('cartCountTop').innerText=c;document.getElementById('cartTotalTop').innerText=s;document.getElementById('subtotal').innerText='₹'+s;document.getElementById('deliveryCharge').innerText='₹'+delivery;document.getElementById('discount').innerText='-₹'+couponDiscount;document.getElementById('total').innerText='₹'+t;document.getElementById('payTotal').innerText=t;document.getElementById('bottomBar').style.display=c>0?'flex':'none';}
 function openCart(){if(!shopOpen){alert('Shop band hai');return;}if(Object.keys(cart).length===0){alert('Cart khali hai!');return;}document.getElementById('shopView').classList.add('hidden');document.getElementById('checkoutView').classList.remove('hidden');document.getElementById('bottomBar').classList.add('hidden');updateCart();}
 function backToShop(){document.getElementById('checkoutView').classList.add('hidden');document.getElementById('shopView').classList.remove('hidden');document.getElementById('bottomBar').classList.remove('hidden');}
-function applyCoupon(){let c=document.getElementById('couponInput').value.trim().toUpperCase();let s=0;Object.keys(cart).forEach(k=>{s+=ITEMS[k].price*cart[k];});let delivery=document.getElementById('orderType').value==='delivery'?30:0;let sub=s+delivery;if((c==='ADYASUNDAY'||c==='ADYA50')&&sub>=500){couponDiscount=50;document.getElementById('couponMsg').innerText=c+' Applied! 50 OFF';}else if(c==='ADYASUNDAY'||c==='ADYA50'){document.getElementById('couponMsg').innerText='500 se zyada chahiye - abhi ₹'+sub;couponDiscount=0;}else{document.getElementById('couponMsg').innerText='Invalid - ADYASUNDAY use karo';couponDiscount=0;}updateCart();}
-function placeOrder(){let n=document.getElementById('custName').value.trim();let m=document.getElementById('custMobile').value.trim();let ad=document.getElementById('custAddress').value.trim();let type=document.getElementById('orderType').value;let u=document.getElementById('utrInput').value.trim();if(!n){alert('Naam bharo!');return;}if(!m||m.length<10){alert('Mobile bharo!');return;}if(!ad){alert('Address bharo!');return;}if(!u){alert('UTR bharo!');return;}document.getElementById('loader').style.display='flex';setTimeout(()=>{document.getElementById('loader').style.display='none';let o=JSON.parse(localStorage.getItem('orders')||'[]');let s=0;let it='';Object.keys(cart).forEach(k=>{s+=ITEMS[k].price*cart[k];it+=ITEMS[k].name+' x'+cart[k]+', ';});let delivery=type==='delivery'?30:0;let t=s+delivery-couponDiscount;let order={id:Date.now(),name:n,mobile:m,address:ad,type:type,items:it,subtotal:s,delivery:delivery,coupon:couponDiscount>0?'ADYASUNDAY':'-',total:t,utr:u,status:'new',time:new Date().toLocaleString()};o.push(order);localStorage.setItem('orders',JSON.stringify(o));alert('Order Bhej Diya! Name:'+n+' UTR:'+u);cart={};couponDiscount=0;backToShop();renderItems();},1500);}
-function loadAdmin(){let o=JSON.parse(localStorage.getItem('orders')||'[]').reverse();let h='';document.getElementById('adminOrderCount').innerText=o.length;if(o.length===0) h='<p>No orders</p>';o.forEach(x=>{let color=x.status==='new'?'#fff9c4': x.status==='accepted'?'#c8e6c9':'#ffcdd2';h+=`<div class="admin-card" style="background:${color}"><b>#${x.id}</b> - ${x.status.toUpperCase()}<br><b>Naam:</b> ${x.name}<br><b>Mobile:</b> ${x.mobile}<br><b>Address:</b> ${x.address} (${x.type})<br><b>Items:</b> ${x.items}<br><b>Total: ₹${x.total} | UTR: ${x.utr}</b><br><b>Time:</b> ${x.time}<br>`+ (x.status==='new'? `<button class="btn-acc" onclick="acceptOrder(${x.id})">✅ Accept</button><button class="btn-rej" onclick="rejectOrder(${x.id})">❌ Reject</button>` : ``) + `</div>`;});document.getElementById('adminOrders').innerHTML=h;updateShopUI();}
-function acceptOrder(id){let o=JSON.parse(localStorage.getItem('orders')||'[]');let idx=o.findIndex(x=>x.id===id);if(idx!==-1){o[idx].status='accepted';localStorage.setItem('orders',JSON.stringify(o));loadAdmin();}}
-function rejectOrder(id){let o=JSON.parse(localStorage.getItem('orders')||'[]');let idx=o.findIndex(x=>x.id===id);if(idx!==-1){o[idx].status='rejected';localStorage.setItem('orders',JSON.stringify(o));loadAdmin();}}
-function clearOrders(){if(confirm('Saare orders delete?')){localStorage.setItem('orders','[]');loadAdmin();}}
+function applyCoupon(){let c=document.getElementById('couponInput').value.trim().toUpperCase();let s=0;Object.keys(cart).forEach(k=>{s+=ITEMS[k].price*cart[k];});let delivery=document.getElementById('orderType').value==='delivery'?30:0;let sub=s+delivery;if(c==='ADYA50'&&sub>=500){couponDiscount=50;document.getElementById('couponMsg').innerText='✅ ADYA50 Applied! 50 OFF on 500+';}else if(c==='ADYA50'){document.getElementById('couponMsg').innerText='❌ 500 se zyada ka order chahiye - abhi ₹'+sub+' hai';couponDiscount=0;}else{document.getElementById('couponMsg').innerText='❌ Invalid - ADYA50 use karo (500 pe 50 OFF)';couponDiscount=0;}updateCart();}
+function placeOrder(){let n=document.getElementById('custName').value.trim();let m=document.getElementById('custMobile').value.trim();let ad=document.getElementById('custAddress').value.trim();let type=document.getElementById('orderType').value;let u=document.getElementById('utrInput').value.trim();if(!n){alert('Naam bharo!');return;}if(!m||m.length<10){alert('Mobile bharo!');return;}if(!ad){alert('Address bharo!');return;}if(!u){alert('UTR bharo!');return;}document.getElementById('loader').style.display='flex';setTimeout(()=>{document.getElementById('loader').style.display='none';let o=JSON.parse(localStorage.getItem('orders')||'[]');let s=0;let it='';Object.keys(cart).forEach(k=>{s+=ITEMS[k].price*cart[k];it+=ITEMS[k].name+' x'+cart[k]+', ';});let delivery=type==='delivery'?30:0;let t=s+delivery-couponDiscount;let order={id:Date.now(),name:n,mobile:m,address:ad,type:type,items:it,subtotal:s,delivery:delivery,coupon:couponDiscount>0?'ADYA50':'-',total:t,utr:u,status:'new',time:new Date().toLocaleString()};o.push(order);localStorage.setItem('orders',JSON.stringify(o));localStorage.setItem('lastOrderCount',o.length);alert('✅ Order Bhej Diya! Name:'+n+' UTR:'+u);cart={};couponDiscount=0;backToShop();renderItems();},1200);}
+
+// Ring Functions - Check karne wala yahi hai
+function enableRing(){
+  ringEnabled=true;
+  document.getElementById('ringStatus').innerText='ON 🔊';
+  document.getElementById('ringStatus').style.color='green';
+  document.getElementById('ringBtn').innerText='🔔 Ring ON Hai';
+  let audio=document.getElementById('orderSound');
+  audio.volume=1.0;
+  audio.play().then(()=>{setTimeout(()=>{audio.pause();audio.currentTime=0;},1500);}).catch(()=>{});
+  try{let ctx=new (window.AudioContext||window.webkitAudioContext)();let o=ctx.createOscillator();let g=ctx.createGain();o.type='square';o.frequency.value=900;g.gain.value=0.8;o.connect(g);g.connect(ctx.destination);o.start();setTimeout(()=>o.stop(),400);}catch(e){}
+  if(Notification && Notification.permission!=='granted'){Notification.requestPermission();}
+  alert('✅ Ring ON! Ab naya order aate hi tez bajegi - Check karne wala yahi hai!');
+}
+function playLoudRing(){
+  if(!ringEnabled) return;
+  let audio=document.getElementById('orderSound');
+  audio.volume=1.0;
+  audio.play().catch(()=>{});
+  if(navigator.vibrate){navigator.vibrate([1000,500,1000,500,1000]);}
+  try{let ctx=new (window.AudioContext||window.webkitAudioContext)();let o=ctx.createOscillator();let g=ctx.createGain();o.type='square';o.frequency.value=1000;g.gain.value=1;o.connect(g);g.connect(ctx.destination);o.start();setTimeout(()=>o.stop(),500);}catch(e){}
+}
+function stopRing(){
+  document.getElementById('orderSound').pause();
+  document.getElementById('orderSound').currentTime=0;
+  if(ringInterval){clearInterval(ringInterval);ringInterval=null;}
+}
+setInterval(()=>{
+  if(!window.location.search.includes('admin')) return;
+  let o=JSON.parse(localStorage.getItem('orders')||'[]');
+  if(o.length>lastOrderCount && ringEnabled){
+    playLoudRing();
+    if(ringInterval) clearInterval(ringInterval);
+    ringInterval=setInterval(playLoudRing,2000);
+    if(Notification.permission==='granted'){
+      let last=o[o.length-1];
+      new Notification('🔥 NAYA ORDER! - ADYA CAFE', {body:last.name+' - ₹'+last.total+' - Jaldi dekho!'});
+    }
+  }
+  lastOrderCount=o.length;
+  localStorage.setItem('lastOrderCount',o.length);
+},2500);
+
+function loadAdmin(){let o=JSON.parse(localStorage.getItem('orders')||'[]').reverse();let h='';document.getElementById('adminOrderCount').innerText=o.length;if(o.length===0) h='<div style="text-align:center;padding:30px;color:#888">No orders yet - Ring ON karke rakho</div>';o.forEach(x=>{let color=x.status==='new'?'#fff9c4': x.status==='accepted'?'#c8e6c9':'#ffcdd2';h+=`<div class="admin-card" style="background:${color}"><b>#${x.id}</b> - <span style="font-weight:900">${x.status.toUpperCase()}</span><br><b>Naam:</b> ${x.name}<br><b>Mobile:</b> ${x.mobile}<br><b>Address:</b> ${x.address} (${x.type})<br><b>Items:</b> ${x.items}<br><b>Total: ₹${x.total} | UTR: ${x.utr} | Coupon: ${x.coupon}</b><br><b>Time:</b> ${x.time}<br>`+ (x.status==='new'? `<button class="btn-acc" onclick="acceptOrder(${x.id})">✅ Accept - Check Kiya</button><button class="btn-rej" onclick="rejectOrder(${x.id})">❌ Reject</button>` : `<i>Done: ${x.status}</i>`) + `</div>`;});document.getElementById('adminOrders').innerHTML=h;updateShopUI();}
+function acceptOrder(id){stopRing();let o=JSON.parse(localStorage.getItem('orders')||'[]');let idx=o.findIndex(x=>x.id===id);if(idx!==-1){o[idx].status='accepted';localStorage.setItem('orders',JSON.stringify(o));loadAdmin();}}
+function rejectOrder(id){stopRing();let o=JSON.parse(localStorage.getItem('orders')||'[]');let idx=o.findIndex(x=>x.id===id);if(idx!==-1){o[idx].status='rejected';localStorage.setItem('orders',JSON.stringify(o));loadAdmin();}}
+function clearOrders(){if(confirm('Saare orders delete?')){localStorage.setItem('orders','[]');localStorage.setItem('lastOrderCount','0');lastOrderCount=0;stopRing();loadAdmin();}}
 renderCats();initShop();renderItems();
 if(window.location.search.includes('admin')){document.getElementById('shopView').classList.add('hidden');document.getElementById('bottomBar').classList.add('hidden');document.getElementById('checkoutView').classList.add('hidden');document.getElementById('adminView').classList.remove('hidden');loadAdmin();}
 document.getElementById('orderType')?.addEventListener('change',updateCart);
